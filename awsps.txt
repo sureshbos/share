@@ -1,0 +1,38 @@
+clear
+$tag = New-Object Amazon.EC2.Model.Tag
+$tag.Key = "Name"
+$tag.Value = "VPCtest"
+$vpcid=(New-EC2VPC -CidrBlock 10.0.0.0/16 -Region us-east-1 -Confirm:$false) 
+$tag = New-Object Amazon.EC2.Model.Tag
+$tag.Key = "Name"
+$tag.Value = "VPCname"
+New-EC2Tag -Resource $vpcid -Tag $tag
+Add-EC2Volume -VolumeId vol-12345678 -InstanceId i-1a2b3c4d -Device /dev/sdh
+Remove-EC2KeyPair KeyPair
+Remove-EC2SecurityGroup -GroupName EC2DemoSecurityGroup
+$groupid = New-EC2SecurityGroup -VpcId "vpc-da0013b3" -GroupName "myPSSecurityGroup" -GroupDescription "EC2-VPC from PowerShell"
+Start-EC2Instance -InstanceId i-12345678
+Stop-EC2Instance -InstanceId i-12345678
+New-EC2Subnet -VpcId $vpcId -CidrBlock 10.20.1.0/24 -AvailabilityZone us-east-1
+New-EC2Instance -ImageId ami-c49c0dac -MinCount 1 -MaxCount 1 -KeyName myPSKeyPair -SecurityGroups myPSSecurityGroup -InstanceType t1.micro
+#clear
+#Set-AWSCredentials -AccessKey AKIAJA36QT575H7BJ3RQ -SecretKey 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 -StoreAs suresh
+#New-EC2VPC -CidrBlock 10.0.0.0/16 -Region us-east-1
+#Remove-EC2Vpc -Region us-east-1 -VpcId vpc-0ff58e49d64d6dc31 -Confirm:$false
+#Set-DefaultAWSRegion -Region us-east-1
+#$myPSKeyPair = New-EC2KeyPair -KeyName myPSKeyPair
+New-EC2SecurityGroup -GroupName myPSSecurityGroup -GroupDescription "EC2-Classic from PowerShell"
+Initialize-AWSDefaults -ProfileName cred
+Remove-EC2Instance -InstanceId i-06927e9860433dd6e -Confirm:$false
+$name = ((get-ec2instance)[0].RunningInstance[0].Tag | select-object Value).Value
+$b=($a.Instances).instanceid
+$keypair.KeyMaterial | Out-File -Encoding ascii C:\Secret\Path\To\Keys\ec2-demo-key.pem
+Edit-EC2Volume -VolumeId vol-02a2f23dc2ab316d7 -Size 10
+Dismount-EC2Volume -VolumeId vol-0cc535078139d7197
+Remove-EC2Volume -VolumeId vol-0cc535078139d7197 -Confirm:$false
+Edit-EC2InstanceAttribute -InstanceId i-07f28367bd86854e1 -Attribute "instanceType" -Value t2.micro
+New-EC2Volume -Size 50 -AvailabilityZone us-west-2a -VolumeType gp2
+New-EC2Volume -SnapshotId <String> -Size <Int32> -AvailabilityZone <String> -VolumeType <VolumeType> -Encrypted <Boolean> -Iops <Int32> -KmsKeyId <String> -TagSpecification <TagSpecification[]> -Force <SwitchParameter>
+(New-EC2Snapshot -VolumeId vol-12345678 -Description "This is a test").snapshotid
+Remove-EC2Snapshot -SnapshotId snap-0f96c02e056842fc3 -Confirm:$False
+Get-EC2Volume -VolumeId vol-12345678

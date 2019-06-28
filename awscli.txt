@@ -1,0 +1,23 @@
+aws ec2 create-vpc --cidr-block 10.0.0.0/16 --output text | awk '{print $NF}' | xargs aws ec2 create-tags --tags Key=Name,Value=MyVPC --resources
+ aws ec2 authorize-security-group-ingress --group-id sg-0f7fff9094f6e46c9  --protocol tcp --port 22 --cidr 0.0.0.0/24
+aws ec2 create-default-vpc
+aws ec2 run-instances --image-id ami-xxxxxxxx --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-903004f8 --subnet-id subnet-6e7f829e
+aws ec2 run-instances --image-id ami-173d747e --count 1 --instance-type t1.micro --key-name MyKeyPair --security-groups my-sg
+aws ec2 create-tags --resources i-5203422c --tags Key=Name,Value=MyInstance
+aws ec2 terminate-instances --instance-ids i-5203422c
+aws ec2 run-instances --image-id ami-1a2b3c4d --instance-type r4.4xlarge --cpu-options "CoreCount=8,ThreadsPerCore=1" --key-name MyKeyPair <corecount & threadspercore>
+aws ec2 attach-volume --volume-id vol-1234567890abcdef0 --instance-id i-01474ef662b89480 --device /dev/sdf
+aws ec2 modify-volume --region <regionName> --volume-id <volumeId> --size <newSize> --volume-type <newType> --iops <newIops>
+aws ec2 start-instances --instance-ids i-1234567890abcdef0
+aws ec2 stop-instances --instance-ids i-1234567890abcdef0
+aws ec2 create-subnet --vpc-id vpc-2f09a348 --cidr-block 10.0.1.0/24
+aws ec2 create-internet-gateway
+aws ec2 attach-internet-gateway --vpc-id vpc-2f09a348 --internet-gateway-id igw-1ff7a07b
+aws ec2 create-route-table --vpc-id vpc-2f09a348
+/usr/local/bin/aws ec2 create-security-group --group-name SGname --description "security group for development environment"
+
+aws ec2 run-instances --image-id ami-abc12345 --count 1 --instance-type t2.micro --key-name test --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=EC2-1}]' 
+
+aws ec2 create-default-vpc --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=MyVPC}]'
+
+ssh root@cch1lpradits "date && hostname"
